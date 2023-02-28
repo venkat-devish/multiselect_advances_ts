@@ -1,27 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/select.module.css";
 
-type SelectProps = {
+type SelectOption = {
   label: string;
   value: number;
 };
 
-type SingleSelectOptions = {
-  options: SelectProps[];
-  value?: SelectProps;
-  onChange: (option: SelectProps | undefined) => void;
+type SingleSelectProps = {
+  options: SelectOption[];
+  value?: SelectOption;
+  onChange: (option: SelectOption | undefined) => void;
 };
 
-const SingleSelect = ({ options, value, onChange }: SingleSelectOptions) => {
-  const [isOpen, setIsOpen] = useState(false);
+const SingleSelect = ({ options, value, onChange }: SingleSelectProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [highlightedOptions, setHighlightedOptions] = useState(0);
+
+  function selectedOption(option: SelectOption) {
+    return option === value;
+  }
+
+  function selectOption(option: SelectOption) {
+    onChange(option);
+  }
+
+  function highlightedOption(idx: number) {
+    setHighlightedOptions(idx);
+  }
 
   function clearOptions() {
     onChange(undefined);
   }
 
-  function selectOption(option: SelectProps) {
-    onChange(option);
-  }
+  useEffect(() => {
+    if (isOpen) setHighlightedOptions(0);
+  }, [isOpen]);
+
   return (
     <div
       onBlur={() => {
@@ -33,27 +47,34 @@ const SingleSelect = ({ options, value, onChange }: SingleSelectOptions) => {
       tabIndex={0}
       className={styles.container}
     >
-      <span className={styles.value}>{value?.label}</span>
+      <div className={styles.value}>{value?.label}</div>
       <button
-        className={styles["clear-button"]}
         onClick={(e) => {
-          clearOptions();
           e.stopPropagation();
+          clearOptions();
         }}
+        className={styles.button}
       >
         &times;
       </button>
       <div className={styles.divider}></div>
-      <div className={styles.caret}></div>
+      <div className={`${!isOpen ? styles.caret : styles["caret-rev"]}`}></div>
       <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
-        {options.map((option) => (
+        {options.map((option, index) => (
           <li
             onClick={(e) => {
               e.stopPropagation();
               selectOption(option);
               setIsOpen(false);
             }}
-            className={styles.option}
+            onMouseEnter={(e) => {
+              highlightedOption(index);
+            }}
+            className={`${styles.option} ${
+              selectedOption(option) ? styles.selected : ""
+            }
+            ${index === highlightedOptions ? styles.hovered : ""}
+            `}
             key={option.value}
           >
             {option.label}
