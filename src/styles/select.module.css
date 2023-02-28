@@ -14,6 +14,8 @@
 }
 
 .value {
+  display: flex;
+  gap: 0.5rem;
   flex-grow: 1;
 }
 
@@ -51,13 +53,16 @@
   top: 3rem;
   left: 0;
   border: 1px solid #777;
+  max-height: 15em;
   border-radius: 0.5em;
   padding: 0;
   width: 100%;
   display: none;
   margin: 0;
   max-height: 15em;
-  overflow: scroll;
+  overflow-y: auto;
+  z-index: 100;
+  background-color: white;
 }
 
 .show {
@@ -76,4 +81,14 @@
 .option {
   padding: 0.5em;
   cursor: pointer;
+}
+
+.option-badge {
+  padding: 0.3em;
+  cursor: pointer;
+}
+
+.remove-button:focus,
+.remove-button:hover {
+  color: rgb(205, 121, 121);
 }
