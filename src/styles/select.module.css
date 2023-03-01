@@ -1,5 +1,5 @@
 .container {
-  border: 1px solid #777;
+  border: 2px solid #777;
   border-radius: 0.5em;
   padding: 0.5em 1em;
   display: flex;
@@ -10,21 +10,22 @@
 }
 
 .container:focus {
-  border: 1px solid rgb(102, 164, 164);
+  border: 2px solid rgb(102, 164, 164);
 }
 
 .value {
   display: flex;
   gap: 0.5rem;
   flex-grow: 1;
+  flex-wrap: wrap;
 }
 
 .button {
   border: none;
-  background-color: #fff;
   color: #777;
-  font-size: 1.25em;
+  font-size: 1.35em;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .divider {
@@ -36,8 +37,9 @@
 .caret {
   border: 0.25em solid transparent;
   border-top-color: #777;
-  translate: 0 25%;
+  translate: 0 45%;
   cursor: pointer;
+  font-size: 1.35em;
 }
 
 .caret-rev {
@@ -45,6 +47,7 @@
   border-bottom-color: #777;
   translate: 0 10%;
   cursor: pointer;
+  font-size: 1.35em;
 }
 
 .options {
@@ -84,11 +87,27 @@
 }
 
 .option-badge {
+  display: flex;
   padding: 0.3em;
   cursor: pointer;
+  border: none;
+  background-color: rgb(106, 185, 185);
+  border-radius: 5px;
+  padding: 0.3rem;
+  font-weight: bold;
+  color: #333;
+  transition: all 0.3s;
 }
 
-.remove-button:focus,
-.remove-button:hover {
-  color: rgb(205, 121, 121);
+.option-badge:hover {
+  background-color: rgb(255, 108, 108);
+}
+
+.remove-button {
+  margin-left: 0.2rem;
+  font-size: 1rem;
+  translate: 0 25%;
+  font-weight: bold;
+  background: none;
+  transform: translate(0px, -6px);
 }
